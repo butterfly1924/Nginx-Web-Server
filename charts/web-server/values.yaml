@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: bardolphshampine77769/nginx-web-server
   pullPolicy: IfNotPresent
-  tag: 755dec6
+  tag: 12f526e
 
 imagePullSecrets: []
 nameOverride: ""
