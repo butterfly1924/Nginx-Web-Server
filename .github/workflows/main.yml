@@ -17,7 +17,7 @@ jobs:
     - name: Build the Docker image
       run: |
         git_hash=$(git rev-parse --short "$GITHUB_SHA")
-        docker build --file Dockerfile --tag bardolphshampine77769/nginx-web-server-$git_hash .
+        docker build --file Dockerfile --tag bardolphshampine77769/nginx-web-server:$git_hash .
       
       
     - name: Docker Login
@@ -35,14 +35,14 @@ jobs:
       run: |
         git_hash=$(git rev-parse --short "$GITHUB_SHA")
         echo "Pushing image to Docker Hub..."
-        docker push bardolphshampine77769/nginx-web-server-$git_hash
-        echo "::set-output name=image::bardolphshampine77769/nginx-web-server-$git_hash"
+        docker push bardolphshampine77769/nginx-web-server:$git_hash
+        echo "::set-output name=image::bardolphshampine77769/nginx-web-server:$git_hash"
 
     - name: Update Version
       run: |
           git_hash=$(git rev-parse --short "$GITHUB_SHA")
-          version=$(cat ./charts/web-server/values.yaml | grep version: | awk '{print $2}')
-          sed -i "s/$tag/nginx-web-server-$git_hash/" ./charts/web-server/values.yaml
+          tag=$(cat ./charts/web-server/values.yaml | grep tag: | awk '{print $2}')
+          sed -i "s/$tag/$git_hash/" ./charts/web-server/values.yaml
           
     - name: Commit and push changes
       uses: devops-infra/action-commit-push@v0.3
