@@ -37,6 +37,7 @@ jobs:
         logout: true
         
     - name: Docker push    
+      run: |
         echo "Pushing image to Docker Hub..."
         docker push bardolphshampine77769/nginx-web-server-$git_hash
         echo "::set-output name=image::bardolphshampine77769/nginx-web-server-$git_hash"
